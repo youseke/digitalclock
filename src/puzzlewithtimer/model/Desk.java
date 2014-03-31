@@ -1,4 +1,4 @@
-package puzzlewithtimer;
+package puzzlewithtimer.model;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -11,7 +11,7 @@ import javafx.scene.shape.Path;
  */
 public class Desk extends Pane {
 
-    Desk(int numOfColumns, int numOfRows) {
+    public Desk(int numOfColumns, int numOfRows) {
         setStyle("-fx-background-color: #cccccc; "
                 + "-fx-border-color: #464646; "
                 + "-fx-effect: innershadow( two-pass-box , rgba(0,0,0,0.8) , 15, 0.0 , 0 , 4 );");

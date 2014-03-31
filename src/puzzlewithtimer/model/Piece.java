@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package puzzlewithtimer;
+package puzzlewithtimer.model;
 
 
 import javafx.event.EventHandler;

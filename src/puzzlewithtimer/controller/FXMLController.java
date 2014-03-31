@@ -22,6 +22,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -34,7 +37,7 @@ import puzzlewithtimer.model.Piece;
  * @author tohtetsu
  */
 public class FXMLController implements Initializable {
-
+    
     private Timeline timeline;
     @FXML
     private Button selectButton;
@@ -63,18 +66,18 @@ public class FXMLController implements Initializable {
         // create desk and pieces 
         desk = new Desk(numOfColumns, numOfRows);
         createPieces(numOfColumns, numOfRows, image);
-
+        
         desk.getChildren().addAll(pieces);
         AnchorPane.setLeftAnchor(desk, 50.0);
         AnchorPane.setTopAnchor(desk, 30.0);
         mainPane.getChildren().add(desk);
     }
-
+    
     @FXML
     public void handleQuit() {
         Platform.exit();
     }
-
+    
     @FXML
     public void handleStart(ActionEvent event) {
         if (timeline != null) {
@@ -98,7 +101,7 @@ public class FXMLController implements Initializable {
         });
         timeline.playFromStart();
     }
-
+    
     @FXML
     public void handleResult(ActionEvent event) {
         if (timeline != null) {
@@ -116,7 +119,7 @@ public class FXMLController implements Initializable {
         });
         timeline.playFromStart();
     }
-
+    
     @FXML
     public void handleSelect(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -137,7 +140,36 @@ public class FXMLController implements Initializable {
             System.out.println("Yes");
         }
     }
-
+    
+    @FXML
+    public void handleDragOver(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasFiles()) {
+            event.acceptTransferModes(TransferMode.COPY);
+        } else {
+            event.consume();
+        }
+    }
+    
+    @FXML
+    public void handleDragDropped(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasFiles()) {
+            try {
+                image = new Image(db.getFiles().get(0).toURI().toURL().toExternalForm());
+                createPieces(numOfColumns, numOfRows, image);
+                desk.getChildren().clear();
+                desk.getChildren().addAll(pieces);
+                event.setDropCompleted(true);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    
     private void createPieces(int numOfColumns, int numOfRows, Image image) {
         // create puzzle pieces
         pieces = new ArrayList<>();

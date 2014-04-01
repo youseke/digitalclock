@@ -54,6 +54,8 @@ import javafx.scene.shape.Shape;
             pieceStroke.setStroke(Color.BLACK);
             // create image view
             imageView.setImage(image);
+            imageView.setFitWidth(550);
+            imageView.setPreserveRatio(true);
             imageView.setClip(pieceClip);
             setFocusTraversable(true);
             getChildren().addAll(imageView, pieceStroke);

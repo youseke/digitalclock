@@ -6,45 +6,30 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="puzzlewithtimer.controller.FXMLController">
-<children>
-<MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER" VBox.vgrow="NEVER">
-<menus>
-<Menu mnemonicParsing="false" text="File">
-<items>
-<MenuItem mnemonicParsing="false" onAction="#handleHint" text="New" />
-<MenuItem mnemonicParsing="false" text="Open…" />
-<Menu mnemonicParsing="false" text="Open Recent" />
-<SeparatorMenuItem mnemonicParsing="false" />
-<MenuItem mnemonicParsing="false" onAction="#handleQuit" text="Quit" />
-</items>
-</Menu>
-<Menu mnemonicParsing="false" text="Edit">
-<items>
-<MenuItem mnemonicParsing="false" text="Undo" />
-<MenuItem mnemonicParsing="false" text="Redo" />
-</items>
-</Menu>
-<Menu mnemonicParsing="false" text="Help">
-<items>
-<MenuItem mnemonicParsing="false" text="About PuzzleWithTimer" />
-</items>
-</Menu>
-</menus>
-</MenuBar>
-<AnchorPane fx:id="mainPane" maxHeight="-1.0" maxWidth="-1.0" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
-<VBox.margin>
-<Insets />
-</VBox.margin>
-</AnchorPane>
-<AnchorPane fx:id="bottomPane" AnchorPane.bottomAnchor="0.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
-<children>
-<Button mnemonicParsing="false" onAction="#handleStart" text="Start" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
-<Button mnemonicParsing="false" onAction="#handleSelect" text="Select" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="85.0" />
-<Button mnemonicParsing="false" onAction="#handleResult" text="Result" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
-<Button mnemonicParsing="false" onAction="#handleHint" text="Hint" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="85.0" />
-<ImageView fx:id="preview" fitWidth="100.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="30.0" />
-</children>
-</AnchorPane>
-</children>
-</AnchorPane>
+<VBox fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="puzzlewithtimer.controller.FXMLController">
+    <children>
+        <AnchorPane fx:id="mainPane" maxHeight="-1.0" maxWidth="-1.0" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" onMouseReleased="#handleOnMouseReleased" prefWidth="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </AnchorPane>
+        <AnchorPane fx:id="bottomPane" AnchorPane.bottomAnchor="0.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+            <children>
+                <Button mnemonicParsing="false" onAction="#handleStart" text="Start" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
+                <Button mnemonicParsing="false" onAction="#handleSelect" text="Select" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="85.0" />
+                <Button mnemonicParsing="false" onAction="#handleResult" text="Result" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
+                <Button mnemonicParsing="false" onAction="#handleHint" text="Hint" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="85.0" />
+                <ImageView fx:id="preview" fitWidth="100.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="15.0" /><ImageView fx:id="hint03" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="200.0">
+<image>
+<Image url="@hint.png" />
+</image></ImageView><ImageView fx:id="hint02" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="180.0">
+<image>
+<Image url="@hint.png" />
+</image></ImageView><ImageView fx:id="hint01" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="160.0">
+<image>
+<Image url="@hint.png" />
+</image></ImageView>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

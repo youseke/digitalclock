@@ -17,12 +17,8 @@ public final class DigitalClock extends Parent {
 
     private final Calendar calendar = Calendar.getInstance();
     private final Digit[] digits;
-    private final Color onColor;
-    private final Color offColor;
 
     public DigitalClock(Color onColor, Color offColor, double sizeRatio) {
-        this.onColor = onColor;
-        this.offColor = offColor;
         // create effect for on LEDs
         Glow onEffect = new Glow(1.7f);
         onEffect.setInput(new InnerShadow());

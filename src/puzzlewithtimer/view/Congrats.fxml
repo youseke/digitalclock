@@ -13,6 +13,7 @@
             </BorderPane.margin>
         </Button>
     </bottom>
-<center><TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-</center>
+<padding>
+<Insets left="5.0" right="5.0" />
+</padding>
 </BorderPane>

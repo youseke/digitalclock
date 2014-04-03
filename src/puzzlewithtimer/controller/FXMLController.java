@@ -24,8 +24,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -37,6 +37,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -77,7 +78,7 @@ public class FXMLController implements Initializable {
     private long startTime;
 
     // components
-    private final DigitalClock digitalClock = new DigitalClock(Color.ORANGERED, null, 0.3);
+    private final DigitalClock digitalClock = new DigitalClock(Color.DARKORANGE, null, 0.3);
     private Desk desk;
     private List<Piece> pieces;
     private int numOfColumns, numOfRows;
@@ -97,15 +98,17 @@ public class FXMLController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        mainPane.setStyle("-fx-background-color: #696969;");
-        vbox.setStyle("-fx-background-color: #F0F8FF;");
-        bottomPane.setStyle("-fx-background-color: #F0F8FF;");
+        mainPane.setStyle("-fx-background-image: url('/puzzlewithtimer/view/image.jpg')");
+        vbox.setStyle("-fx-background-image: url('/puzzlewithtimer/view/image2.jpg')");
+
         setPuzzleWithTimer(new Image(getClass().getResourceAsStream("/puzzlewithtimer/view/default.jpg"), 550, 0, true, true));
     }
 
     @FXML
     public void handleStart(ActionEvent event) {
-        if (timeline != null) timeline.stop();
+        if (timeline != null) {
+            timeline.stop();
+        }
         startTime = System.currentTimeMillis();
         hints.stream().forEach((hint) -> {
             hint.setVisible(true);
@@ -169,8 +172,12 @@ public class FXMLController implements Initializable {
 
     @FXML
     public void handleHint(ActionEvent event) {
-        if (hintCounts == 0) return;
-        if (timeline != null) timeline.stop();
+        if (hintCounts == 0) {
+            return;
+        }
+        if (timeline != null) {
+            timeline.stop();
+        }
         for (Piece p : pieces) {
             if (p.getTranslateX() != 0 || p.getTranslateY() != 0) {
                 timeline = new Timeline();
@@ -219,16 +226,28 @@ public class FXMLController implements Initializable {
 
     @FXML
     public void handleOnMouseReleased() {
-        if (!onGame) return;
+        if (!onGame) {
+            return;
+        }
         for (Piece p : pieces) {
-            if (p.getTranslateX() != 0 || p.getTranslateY() != 0) return;
+            if (p.getTranslateX() != 0 || p.getTranslateY() != 0) {
+                return;
+            }
         }
         long time = (System.currentTimeMillis() - startTime) / 1000;
         // create text
         Text text = new Text();
         text.setText("Congrats!\nYou finished your game in " + time + " secs");
         text.setFont(Font.font("Verdana", 20));
-        text.setFill(Color.RED);
+        text.setFill(Color.GOLD);
+        text.setTextAlignment(TextAlignment.CENTER);
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.GOLD);
+        dropShadow.setRadius(25);
+        dropShadow.setSpread(0.25);
+        dropShadow.setBlurType(BlurType.GAUSSIAN);
+        text.setEffect(dropShadow);
+        congratsWindow.setCenter(text);
         //display congratulation window
         Stage stage = new Stage();
         stage.setScene(new Scene(congratsWindow));
@@ -278,8 +297,8 @@ public class FXMLController implements Initializable {
         mainPane.getChildren().add(digitalClock);
         // set preview
         preview.setImage(image);
-        bottomPane.setPrefHeight(preview.getFitHeight() + 30);
-        bottomPane.setMaxHeight(preview.getFitHeight() + 30);
+        bottomPane.setPrefSize(desk.getWidth() + 100, preview.getFitHeight() + 30);
+        bottomPane.setMaxSize(desk.getWidth() + 100, preview.getFitHeight() + 30);
         // set vbox
         //vbox.setPrefHeight(desk.getHeight() + preview.getFitHeight() + 130);
         //vbox.setMaxHeight(desk.getHeight() + preview.getFitHeight() + 130);

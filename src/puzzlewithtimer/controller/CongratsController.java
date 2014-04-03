@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -20,15 +21,12 @@ import javafx.stage.Stage;
  */
 public class CongratsController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
+    @FXML
+    private BorderPane  b;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        b.setStyle(" -fx-background-color:  linear-gradient(darkgray, gray);");
     }
 
     @FXML

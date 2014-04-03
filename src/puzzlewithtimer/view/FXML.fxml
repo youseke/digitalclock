@@ -19,16 +19,22 @@
                 <Button mnemonicParsing="false" onAction="#handleSelect" text="Select" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="85.0" />
                 <Button mnemonicParsing="false" onAction="#handleResult" text="Result" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
                 <Button mnemonicParsing="false" onAction="#handleHint" text="Hint" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="85.0" />
-                <ImageView fx:id="preview" fitWidth="100.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="15.0" /><ImageView fx:id="hint03" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="200.0">
-<image>
-<Image url="@hint.png" />
-</image></ImageView><ImageView fx:id="hint02" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="180.0">
-<image>
-<Image url="@hint.png" />
-</image></ImageView><ImageView fx:id="hint01" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="160.0">
-<image>
-<Image url="@hint.png" />
-</image></ImageView>
+                <ImageView fx:id="preview" fitWidth="100.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="15.0" />
+                <ImageView fx:id="hint03" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="200.0">
+                    <image>
+                        <Image url="@hint.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="hint02" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="180.0">
+                    <image>
+                        <Image url="@hint.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="hint01" fitWidth="20.0" layoutX="185.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" rotate="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="160.0">
+                    <image>
+                        <Image url="@hint.png" />
+                    </image>
+                </ImageView>
             </children>
         </AnchorPane>
     </children>

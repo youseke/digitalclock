@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +24,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -38,6 +41,7 @@ import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apache.commons.io.FilenameUtils;
 import puzzlewithtimer.model.Desk;
 import puzzlewithtimer.model.DigitalClock;
 import puzzlewithtimer.model.Piece;
@@ -64,16 +68,19 @@ public class FXMLController implements Initializable {
     @FXML
     private ImageView hint03;
 
+    // for game control 
     private Timeline timeline;
+    private final List<String> extensions = Arrays.asList("jpg", "png", "tif");
+    private List<ImageView> hints;
+    private int hintCounts = 3;
+    private boolean onGame = false;
+    private long startTime;
+
+    // components
     private final DigitalClock digitalClock = new DigitalClock(Color.ORANGERED, null, 0.3);
-    private File file;
     private Desk desk;
     private List<Piece> pieces;
-    private Image image;
     private int numOfColumns, numOfRows;
-    private ImageView[] hints;
-    private int hintCounts = 3;
-    private long startTime;
     private BorderPane congratsWindow;
 
     /**
@@ -84,33 +91,28 @@ public class FXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        hints = new ImageView[]{hint01, hint02, hint03};
-        // load default puzzle image
-        image = new Image(getClass().getResourceAsStream(
-                "/puzzlewithtimer/view/default.jpg"), 550, 0, true, true);
+        hints = Arrays.asList(hint01, hint02, hint03);
         try {
-            congratsWindow = FXMLLoader.load(getClass().getResource("/puzzlewithtimer/view/Congrats.fxml"));;
+            congratsWindow = FXMLLoader.load(getClass().getResource("/puzzlewithtimer/view/Congrats.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         mainPane.setStyle("-fx-background-color: #696969;");
         vbox.setStyle("-fx-background-color: #F0F8FF;");
         bottomPane.setStyle("-fx-background-color: #F0F8FF;");
-        setPuzzleWithTimer();
+        setPuzzleWithTimer(new Image(getClass().getResourceAsStream("/puzzlewithtimer/view/default.jpg"), 550, 0, true, true));
     }
 
     @FXML
     public void handleStart(ActionEvent event) {
-        if (timeline != null) {
-            timeline.stop();
-        }
+        if (timeline != null) timeline.stop();
         startTime = System.currentTimeMillis();
-        hintCounts = 3;
-        for (ImageView hint : hints) {
+        hints.stream().forEach((hint) -> {
             hint.setVisible(true);
-        }
+        });
+
         timeline = new Timeline();
-        pieces.stream().map((piece) -> {
+        pieces.stream().map((Piece piece) -> {
             piece.setActive();
             return piece;
         }).forEach((piece) -> {
@@ -126,6 +128,7 @@ public class FXMLController implements Initializable {
                             new KeyValue(piece.translateYProperty(), shuffleY)));
         });
         timeline.playFromStart();
+        onGame = true;
     }
 
     @FXML
@@ -153,27 +156,21 @@ public class FXMLController implements Initializable {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPGE files (*.jpg)", "*.jpg");
         fileChooser.getExtensionFilters().add(extFilter);
         //Show open file dialog
-        file = fileChooser.showOpenDialog(null);
+        File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             try {
-                image = new Image(file.toURI().toURL().toExternalForm(), 550, 0, true, true);
+                Image image = new Image(file.toURI().toURL().toExternalForm(), 550, 0, true, true);
+                setPuzzleWithTimer(image);
             } catch (MalformedURLException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            setPuzzleWithTimer();
         }
     }
 
     @FXML
     public void handleHint(ActionEvent event) {
-        if (hintCounts == 0) {
-            return;
-        }
-        hints[--hintCounts].setVisible(false);
-        if (timeline != null) {
-            timeline.stop();
-        }
-
+        if (hintCounts == 0) return;
+        if (timeline != null) timeline.stop();
         for (Piece p : pieces) {
             if (p.getTranslateX() != 0 || p.getTranslateY() != 0) {
                 timeline = new Timeline();
@@ -183,6 +180,7 @@ public class FXMLController implements Initializable {
                                 new KeyValue(p.translateXProperty(), 0),
                                 new KeyValue(p.translateYProperty(), 0)));
                 timeline.playFromStart();
+                hints.get(--hintCounts).setVisible(false);
                 break;
             }
         }
@@ -192,7 +190,11 @@ public class FXMLController implements Initializable {
     public void handleDragOver(DragEvent event) {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
-            event.acceptTransferModes(TransferMode.COPY);
+            String path = db.getFiles().get(0).getAbsolutePath();
+            String ext = FilenameUtils.getExtension(path);
+            if (extensions.contains(ext)) {
+                event.acceptTransferModes(TransferMode.COPY);
+            }
         } else {
             event.consume();
         }
@@ -203,11 +205,11 @@ public class FXMLController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
             try {
-                image = new Image(db.getFiles().get(0).toURI().toURL().toExternalForm(), 550, 0, true, true);
+                Image image = new Image(db.getFiles().get(0).toURI().toURL().toExternalForm(), 550, 0, true, true);
+                setPuzzleWithTimer(image);
             } catch (MalformedURLException ex) {
                 Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            setPuzzleWithTimer();
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -217,20 +219,22 @@ public class FXMLController implements Initializable {
 
     @FXML
     public void handleOnMouseReleased() {
+        if (!onGame) return;
         for (Piece p : pieces) {
-            if (p.getTranslateX() != 0 || p.getTranslateY() != 0) {
-                return;
-            }
+            if (p.getTranslateX() != 0 || p.getTranslateY() != 0) return;
         }
         long time = (System.currentTimeMillis() - startTime) / 1000;
+        // create text
         Text text = new Text();
-        text.setText("Congrats!¥n You finished your game in " + time + " secs");
+        text.setText("Congrats!\nYou finished your game in " + time + " secs");
         text.setFont(Font.font("Verdana", 20));
         text.setFill(Color.RED);
-        congratsWindow.setCenter(text);
+        //display congratulation window
         Stage stage = new Stage();
         stage.setScene(new Scene(congratsWindow));
         stage.show();
+
+        onGame = false;
     }
 
     private void createPieces(int numOfColumns, int numOfRows, Image image) {
@@ -248,7 +252,7 @@ public class FXMLController implements Initializable {
         }
     }
 
-    private void setPuzzleWithTimer() {
+    private void setPuzzleWithTimer(Image image) {
         //calculate colums and rows
         numOfColumns = (int) (image.getWidth() / Piece.SIZE);
         numOfRows = (int) (image.getHeight() / Piece.SIZE);

@@ -5,11 +5,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="100.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="puzzlewithtimer.controller.CongratsController">
-<bottom>
-<Button layoutX="70.33837890625" layoutY="66.0" mnemonicParsing="false" onAction="#handleOK" text="OK" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" BorderPane.alignment="CENTER">
-<BorderPane.margin>
-<Insets bottom="10.0" />
-</BorderPane.margin></Button>
-</bottom>
+<BorderPane fx:id="b" prefHeight="100.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="puzzlewithtimer.controller.CongratsController">
+    <bottom>
+        <Button layoutX="70.33837890625" layoutY="66.0" mnemonicParsing="false" onAction="#handleOK" text="OK" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="5.0" />
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+<center><TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+</center>
 </BorderPane>

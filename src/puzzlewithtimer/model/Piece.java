@@ -1,6 +1,5 @@
 package puzzlewithtimer.model;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;

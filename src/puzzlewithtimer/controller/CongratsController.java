@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package puzzlewithtimer.controller;
 
 import java.net.URL;
@@ -26,7 +21,7 @@ public class CongratsController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        b.setStyle(" -fx-background-color:  linear-gradient(darkgray, gray);");
+        b.setStyle("-fx-background-image: url('/puzzlewithtimer/view/image.jpg')");
     }
 
     @FXML
